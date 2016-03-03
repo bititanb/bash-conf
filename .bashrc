@@ -46,10 +46,6 @@ fi
     # ;;
 # esac
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
@@ -65,59 +61,32 @@ if ! shopt -oq posix; then
   fi
 fi
 
-##################################################
-# Color chart					 #
-##################################################
-
-txtblk='\e[0;30m' # Black - Regular
-txtred='\e[0;31m' # Red
-txtgrn='\e[0;32m' # Green
-txtylw='\e[0;33m' # Yellow
-txtblu='\e[0;34m' # Blue
-txtpur='\e[0;35m' # Purple
-txtcyn='\e[0;36m' # Cyan
-txtwht='\e[0;37m' # White
-bldblk='\e[1;30m' # Black - Bold
-bldred='\e[1;31m' # Red
-bldgrn='\e[1;32m' # Green
-bldylw='\e[1;33m' # Yellow
-bldblu='\e[1;34m' # Blue
-bldpur='\e[1;35m' # Purple
-bldcyn='\e[1;36m' # Cyan
-bldwht='\e[1;37m' # White
-unkblk='\e[4;30m' # Black - Underline
-undred='\e[4;31m' # Red
-undgrn='\e[4;32m' # Green
-undylw='\e[4;33m' # Yellow
-undblu='\e[4;34m' # Blue
-undpur='\e[4;35m' # Purple
-undcyn='\e[4;36m' # Cyan
-undwht='\e[4;37m' # White
-bakblk='\e[40m'   # Black - Background
-bakred='\e[41m'   # Red
-badgrn='\e[42m'   # Green
-bakylw='\e[43m'   # Yellow
-bakblu='\e[44m'   # Blue
-bakpur='\e[45m'   # Purple
-bakcyn='\e[46m'   # Cyan
-bakwht='\e[47m'   # White
-txtrst='\e[0m'    # Text Reset
-
 # History settings
-HISTSIZE=30000
-HISTFILESIZE=30000
-HISTCONTROL=ignorespace # don't put duplicate lines or lines starting with space in the history.
+export HISTSIZE=30000
+export HISTFILESIZE=30000
+export HISTCONTROL=ignorespace #lines starting with space in the history.
+export HISTIGNORE='&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
 shopt -s histappend # append to the history file, don't overwrite it
 # hack for sharing history between terminals
 export PROMPT_COMMAND="history -a && cat ~/.bash_history | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > /tmp/.bash_history$$ && history -c && mv /tmp/.bash_history$$ ~/.bash_history && history -r"
-export HISTIGNORE='&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
 
+shopt -s autocd
+shopt -s cdable_vars				# set the bash option so that no '$' is required (disallow write access to terminal)
+shopt -s cdspell				# this will correct minor spelling errors in a cd command
+shopt -s checkjobs              # second "exit" needed if running any jobs
 shopt -s checkwinsize # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
-shopt -s globstar # If set, the pattern "**" used in a pathname expansion context will match all files and zero or more directories and subdirectories.
-
+shopt -s cmdhist          			# save multi-line commands in history as single line
+shopt -s complete_fullquote
+shopt -s dirspell
+shopt -s extglob
+shopt -s globstar
+shopt -s nocaseglob        # case-insensitive pathname expansion
+shopt -s mailwarn				# keep an eye on the mail file (access time)
+set -o notify					# notify when jobs running in background terminate
 set bell-style visible # disable audio bell
 set completion-ignore-case on 		# complete things that have been typed in the wrong case
-set -o notify					# notify when jobs running in background terminate
+set colored-stats on
+set completion-prefix-display-length 1
 
 
 PS1="\[\e[35;1m\]\[$(pwd -P)\] \[\e[32;1m\]\h \u \[\e[35;1m\]\j $(echo \${?\#\#0:}) \[\e[0m\]\t\n\[\e[32;1m\]\\$ \[\e[0m\]"
