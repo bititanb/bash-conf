@@ -103,9 +103,36 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
-HISTCONTROL=erasedups:ignorespace # don't put duplicate lines or lines starting with space in the history.
+# History settings
+HISTSIZE=30000
+HISTFILESIZE=30000
+HISTCONTROL=ignorespace # don't put duplicate lines or lines starting with space in the history.
 shopt -s histappend # append to the history file, don't overwrite it
-HISTSIZE=10000
-HISTFILESIZE=15000
+# hack for sharing history between terminals
+export PROMPT_COMMAND="history -a && cat ~/.bash_history | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > /tmp/.bash_history$$ && history -c && mv /tmp/.bash_history$$ ~/.bash_history && history -r"
+export HISTIGNORE='&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
+
 shopt -s checkwinsize # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s globstar # If set, the pattern "**" used in a pathname expansion context will match all files and zero or more directories and subdirectories.
+
+set bell-style visible # disable audio bell
+set completion-ignore-case on 		# complete things that have been typed in the wrong case
+set -o notify					# notify when jobs running in background terminate
+
+
+PS1="\[\e[35;1m\]\[$(pwd -P)\] \[\e[32;1m\]\h \u \[\e[35;1m\]\j $(echo \${?\#\#0:}) \[\e[0m\]\t\n\[\e[32;1m\]\\$ \[\e[0m\]"
+
+# # export TMOUT=600				# auto logout after n seconds of inactivity
+# export LESSCHARSET='latin1'
+# export LESS='-i -N -w  -z-4 -g -e -M -X -F -R -P%t?f%f \'
+# # export LESSOPEN="|lesspipe.sh %s"; export LESSOPEN
+# export LESSOPEN='|/usr/bin/lesspipe.sh %s 2>&-'	# use this if lesspipe.sh exists
+# # export LESS="-QR"				# tell less not to beep and also display colours
+# # export LESS='-R'
+# # export LESS_TERMCAP_mb=$'\E[01;31m'      	# less colors for Man pages # begin blinking
+# # export LESS_TERMCAP_md=$'\E[01;38;5;74m'  	# less colors for Man pages # begin bold
+# # export LESS_TERMCAP_me=$'\E[0m'           	# less colors for Man pages # end mode
+# # export LESS_TERMCAP_se=$'\E[0m'           	# less colors for Man pages # end standout-mode
+# # export LESS_TERMCAP_so=$'\E[38;5;246m'    	# less colors for Man pages # begin standout-mode - info box
+# # export LESS_TERMCAP_ue=$'\E[0m'           	# less colors for Man pages # end underline
+# # export LESS_TERMCAP_us=$'\E[04;38;5;146m' 	# less colors for Man pages # begin underline
