@@ -2,51 +2,11 @@
 [ -z "$PS1" ] && return
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# # set a fancy prompt (non-color, unless we know we "want" color)
-# case "$TERM" in
-    # xterm-color|*-256color|*rxvt*) color_prompt=yes;;
-# esac
-
-# # uncomment for a colored prompt, if the terminal has the capability; turned
-# # off by default to not distract the user: the focus in a terminal window
-# # should be on the output of commands, not on the prompt
-# force_color_prompt=yes
-
-# if [ -n "$force_color_prompt" ]; then
-    # if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# # We have color support; assume it's compliant with Ecma-48
-	# # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# # a case would tend to support setf rather than setaf.)
-	# color_prompt=yes
-    # else
-	# color_prompt=
-    # fi
+# if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    # debian_chroot=$(cat /etc/debian_chroot)
 # fi
 
-# if [ "$color_prompt" = yes ]; then
-    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-# else
-    # PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-# fi
-# unset color_prompt force_color_prompt
-
-# # If this is an xterm set the title to user@host:dir
-# case "$TERM" in
-# xterm*|*rxvt*)
-    # PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    # ;;
-# *)
-    # ;;
-# esac
-
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+# enable programmable completion features 
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -64,6 +24,7 @@ shopt -s histappend # append to the history file, don't overwrite it
 # hack for sharing history between terminals
 export PROMPT_COMMAND="history -a && cat ~/.bash_history | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > /tmp/.bash_history$$ && history -c && mv /tmp/.bash_history$$ ~/.bash_history && history -r"
 
+# bash specific options
 shopt -s autocd       # cd without "cd", just directory
 shopt -s cdable_vars				# set the bash option so that no '$' is required (disallow write access to terminal)
 shopt -s cdspell				# this will correct minor spelling errors in a cd command
@@ -78,6 +39,7 @@ shopt -s histverify
 shopt -s nocaseglob        # case-insensitive pathname expansion
 shopt -s mailwarn				# keep an eye on the mail file (access time)
 
+# posix shell options
 set -o notify					# notify when jobs running in background terminate
 
 PS1='\[\e[35;1m\]$PWD \[\e[32;1m\]\h \u \[\e[35;1m\]\j ${?##0:} \[\e[0m\]\t\n\[\e[32;1m\]\\$ \[\e[0m\]'
@@ -86,8 +48,6 @@ PS1='\[\e[35;1m\]$PWD \[\e[32;1m\]\h \u \[\e[35;1m\]\j ${?##0:} \[\e[0m\]\t\n\[\
 # ALIASES
 ###################
 
-# Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
-# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 alias r='sudo '
 alias ru='su -c '
 alias s='sed'
