@@ -36,7 +36,8 @@ export GREP_OPTIONS='--color=auto -i'
 export GREP_COLORS='ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
 # export GREP_COLORS='fn=34:mc=01;30:ms=33:sl=21:cx=31'
 
-export LESS="-iMRWMQ"
+export LESS="-iMRwMQ"
+export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
 export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
 export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
 export LESS_TERMCAP_me=$(tput sgr0)
