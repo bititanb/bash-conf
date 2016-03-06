@@ -1,9 +1,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)" 
-
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
@@ -46,9 +43,6 @@ fi
     # ;;
 # esac
 
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -88,115 +82,65 @@ set -o notify					# notify when jobs running in background terminate
 
 PS1='\[\e[35;1m\]$PWD \[\e[32;1m\]\h \u \[\e[35;1m\]\j ${?##0:} \[\e[0m\]\t\n\[\e[32;1m\]\\$ \[\e[0m\]'
 
-# # export TMOUT=600				# auto logout after n seconds of inactivity
-# export LESSCHARSET='latin1'
-# export LESS='-i -N -w  -z-4 -g -e -M -X -F -R -P%t?f%f \'
-# # export LESSOPEN="|lesspipe.sh %s"; export LESSOPEN
-# export LESSOPEN='|/usr/bin/lesspipe.sh %s 2>&-'	# use this if lesspipe.sh exists
-# # export LESS="-QR"				# tell less not to beep and also display colours
-# # export LESS='-R'
-# # export LESS_TERMCAP_mb=$'\E[01;31m'      	# less colors for Man pages # begin blinking
-# # export LESS_TERMCAP_md=$'\E[01;38;5;74m'  	# less colors for Man pages # begin bold
-# # export LESS_TERMCAP_me=$'\E[0m'           	# less colors for Man pages # end mode
-# # export LESS_TERMCAP_se=$'\E[0m'           	# less colors for Man pages # end standout-mode
-# # export LESS_TERMCAP_so=$'\E[38;5;246m'    	# less colors for Man pages # begin standout-mode - info box
-# # export LESS_TERMCAP_ue=$'\E[0m'           	# less colors for Man pages # end underline
-# # export LESS_TERMCAP_us=$'\E[04;38;5;146m' 	# less colors for Man pages # begin underline
-
-# Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
-# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-alias g='grep --color=auto -i'
-alias l='less'
-alias s='sudo '
-alias v='vim'
-alias f='find'
-alias ls='ls -hX --color=auto'
-alias ll='ls -hlX --time-style=iso --color=auto'
-alias ac='apt-cache'
-alias acs='apt-cache show'
-alias aci='apt-cache search'
-alias ag='apt-get'
-alias agi='apt-get install'
-alias agr='apt-get remove'
-alias agupd='apt-get update'
-alias agupg='apt-get upgrade'
-alias dp='dpkg'
-alias dpgs='dpkg --get-selections'
-alias ki='kill'
-alias pk='pkill'
-alias ka='killall'
-alias he='head'
-alias ta='tail'
-alias se='service'
-
-cl() {
-    cd "$@" && ls;
-}
-
-# add export PATH
-export EDITOR='vim'
-export VISUAL='vim'
-export BROWSER='palemoonf'
-export LESS="-iMR"
-export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
-export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
-export LESS_TERMCAP_me=$(tput sgr0)
-export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4) # yellow on blue
-export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 7) # white
-export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
-export LESS_TERMCAP_ZN=$(tput ssubm)
-export LESS_TERMCAP_ZV=$(tput rsubm)
-export LESS_TERMCAP_ZO=$(tput ssupm)
-export LESS_TERMCAP_ZW=$(tput rsupm)
-
 ###################
 # ALIASES
 ###################
 
-# suffix aliases like
-# alias -s tex=vim
-
-alias -g ...='../..'
-alias -g ....='../../..'
-alias -g .....='../../../..'
-alias -g HE='|& head'
-alias -g TA='|& tail'
-alias -g L='|& less'
-alias -g G='|& grep --color=auto -i'
-alias -g EI='/etc/init.d/'
-alias -g H=' --help'
-
-alias s='sudo '
-alias le='LC_ALL=C '
-
-alias m='man'
+# Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
+# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias r='sudo '
+alias ru='su -c '
+alias s='sed'
+alias a='awk'
+alias g='grep'
 alias l='less'
 alias v='vim'
+alias gv='gvim'
+alias w='wget'
 alias f='find'
-#alias ls='ls -hX --color=auto'
-#alias ll='ls -hlX --time-style=iso --color=auto'
-alias ls='ls -hX'
-alias ll='ls -hlX'
-alias lm='ls -hlX -tr'
-alias ac='apt-cache'
-alias ag='apt-get'
-alias af='apt-file'
+alias t='tar'
+alias j='jobs'
+alias p='ping'
+alias m='man'
+alias ma='man -a'
+alias mk='man -k'
+alias mkk='man -K'
+alias br="$BROWSER"
+alias cu='curl'
 alias ki='kill'
+alias pk='pkill'
 alias ka='killall'
-alias dp='dpkg'
+alias cm='chmod'
+alias ec='echo'
+alias tr='traceroute'
+alias co='chown'
+alias st='stat'
+alias xa='xargs'
+alias vr='virsh'
+alias vrl='virsh list --all'
+alias he='head'
+alias ta='tail'
 alias se='service'
+alias vc='vcsh'
+alias md='mkdir'
+alias wh='which'
+alias pa='ps aux'
+alias ls='ls -X --color=auto'
+alias ll='ls -X -hl --time-style=iso --color=auto'
+alias lt='ls -X -hl -tr --time-style=iso --color=auto'
+# alias le='LC_ALL=C '
 
+alias d='dpkg'
+
+alias af='apt-file'
+
+alias ac='apt-cache'
+alias acs='apt-cache search'
+alias ach='apt-cache show'
+
+alias ag='apt-get'
 alias agi='apt-get install'
 alias agr='apt-get remove'
-alias ags='apt-get search'
-alias agd='apt-get update'
+alias agp='apt-get purge'
+alias agu='apt-get update'
 alias agg='apt-get upgrade'
-alias pa='ps aux'
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
