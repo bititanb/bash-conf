@@ -102,3 +102,101 @@ PS1='\[\e[35;1m\]$PWD \[\e[32;1m\]\h \u \[\e[35;1m\]\j ${?##0:} \[\e[0m\]\t\n\[\
 # # export LESS_TERMCAP_so=$'\E[38;5;246m'    	# less colors for Man pages # begin standout-mode - info box
 # # export LESS_TERMCAP_ue=$'\E[0m'           	# less colors for Man pages # end underline
 # # export LESS_TERMCAP_us=$'\E[04;38;5;146m' 	# less colors for Man pages # begin underline
+
+# Add an "alert" alias for long running commands.  Use like so: sleep 10; alert
+# alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias g='grep --color=auto -i'
+alias l='less'
+alias s='sudo '
+alias v='vim'
+alias f='find'
+alias ls='ls -hX --color=auto'
+alias ll='ls -hlX --time-style=iso --color=auto'
+alias ac='apt-cache'
+alias acs='apt-cache show'
+alias aci='apt-cache search'
+alias ag='apt-get'
+alias agi='apt-get install'
+alias agr='apt-get remove'
+alias agupd='apt-get update'
+alias agupg='apt-get upgrade'
+alias dp='dpkg'
+alias dpgs='dpkg --get-selections'
+alias ki='kill'
+alias pk='pkill'
+alias ka='killall'
+alias he='head'
+alias ta='tail'
+alias se='service'
+
+cl() {
+    cd "$@" && ls;
+}
+
+# add export PATH
+export EDITOR='vim'
+export VISUAL='vim'
+export BROWSER='palemoonf'
+export LESS="-iMR"
+export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
+export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
+export LESS_TERMCAP_me=$(tput sgr0)
+export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4) # yellow on blue
+export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
+export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 7) # white
+export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
+export LESS_TERMCAP_mr=$(tput rev)
+export LESS_TERMCAP_mh=$(tput dim)
+export LESS_TERMCAP_ZN=$(tput ssubm)
+export LESS_TERMCAP_ZV=$(tput rsubm)
+export LESS_TERMCAP_ZO=$(tput ssupm)
+export LESS_TERMCAP_ZW=$(tput rsupm)
+
+###################
+# ALIASES
+###################
+
+# suffix aliases like
+# alias -s tex=vim
+
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g HE='|& head'
+alias -g TA='|& tail'
+alias -g L='|& less'
+alias -g G='|& grep --color=auto -i'
+alias -g EI='/etc/init.d/'
+alias -g H=' --help'
+
+alias s='sudo '
+alias le='LC_ALL=C '
+
+alias m='man'
+alias l='less'
+alias v='vim'
+alias f='find'
+#alias ls='ls -hX --color=auto'
+#alias ll='ls -hlX --time-style=iso --color=auto'
+alias ls='ls -hX'
+alias ll='ls -hlX'
+alias lm='ls -hlX -tr'
+alias ac='apt-cache'
+alias ag='apt-get'
+alias af='apt-file'
+alias ki='kill'
+alias ka='killall'
+alias dp='dpkg'
+alias se='service'
+
+alias agi='apt-get install'
+alias agr='apt-get remove'
+alias ags='apt-get search'
+alias agd='apt-get update'
+alias agg='apt-get upgrade'
+alias pa='ps aux'
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
