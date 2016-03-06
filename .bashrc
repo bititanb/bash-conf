@@ -70,33 +70,23 @@ shopt -s histappend # append to the history file, don't overwrite it
 # hack for sharing history between terminals
 export PROMPT_COMMAND="history -a && cat ~/.bash_history | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > /tmp/.bash_history$$ && history -c && mv /tmp/.bash_history$$ ~/.bash_history && history -r"
 
-shopt -s autocd
+shopt -s autocd       # cd without "cd", just directory
 shopt -s cdable_vars				# set the bash option so that no '$' is required (disallow write access to terminal)
 shopt -s cdspell				# this will correct minor spelling errors in a cd command
 shopt -s checkjobs              # second "exit" needed if running any jobs
 shopt -s checkwinsize # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s cmdhist          			# save multi-line commands in history as single line
-shopt -s complete_fullquote
-shopt -s dirspell
-shopt -s extglob
-shopt -s globstar
+shopt -s dirspell     # correct mistakes in dir name
+shopt -s dotglob       # include dot files during filename expansions
+shopt -s extglob      
+shopt -s globstar       # ** for include subdirs
+shopt -s histverify
 shopt -s nocaseglob        # case-insensitive pathname expansion
 shopt -s mailwarn				# keep an eye on the mail file (access time)
 
-set notify					# notify when jobs running in background terminate
-set bell-style visible # disable audio bell
-set completion-ignore-case on 		# complete things that have been typed in the wrong case
-set completion-map-case on        # replace - with _ in completion and vice versa
-set colored-stats on            # completions in color
-set completion-prefix-display-length 1           # always show ... instead of similar part in completion
-set completion-display-width 0           # only 1 column of completion matches
-set menu-complete-display-prefix on     # menu completion display similar part before cycling
-set show-all-if-ambiguous on       # no need for extra tabs on completion
-set show-all-if-unmodified on      # no need for extra tabs on completion
-Control-k: menu-complete
-Control-j: menu-complete-backward
+set -o notify					# notify when jobs running in background terminate
 
-PS1="\[\e[35;1m\]\[$(pwd -P)\] \[\e[32;1m\]\h \u \[\e[35;1m\]\j $(echo \${?\#\#0:}) \[\e[0m\]\t\n\[\e[32;1m\]\\$ \[\e[0m\]"
+PS1='\[\e[35;1m\]$PWD \[\e[32;1m\]\h \u \[\e[35;1m\]\j ${?##0:} \[\e[0m\]\t\n\[\e[32;1m\]\\$ \[\e[0m\]'
 
 # # export TMOUT=600				# auto logout after n seconds of inactivity
 # export LESSCHARSET='latin1'

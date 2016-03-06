@@ -1,0 +1,12 @@
+set bell-style visible # disable audio bell
+set completion-ignore-case on 		# complete things that have been typed in the wrong case
+set completion-map-case on        # replace - with _ in completion and vice versa
+set colored-stats on            # completions in color
+set completion-prefix-display-length 1           # always show ... instead of similar part in completion
+set completion-display-width 0           # only 1 column of completion matches
+set menu-complete-display-prefix on     # menu completion display similar part before cycling
+set show-all-if-ambiguous on       # no need for extra tabs on completion
+set show-all-if-unmodified on      # no need for extra tabs on completion
+
+Control-k: menu-complete
+Control-i: menu-complete-backward
