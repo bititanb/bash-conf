@@ -82,11 +82,17 @@ shopt -s extglob
 shopt -s globstar
 shopt -s nocaseglob        # case-insensitive pathname expansion
 shopt -s mailwarn				# keep an eye on the mail file (access time)
-set -o notify					# notify when jobs running in background terminate
+
+set notify					# notify when jobs running in background terminate
 set bell-style visible # disable audio bell
 set completion-ignore-case on 		# complete things that have been typed in the wrong case
 set colored-stats on
 set completion-prefix-display-length 1
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set completion-display-width 1
+Control-k: menu-complete
+Control-j: menu-complete-backward
 
 
 PS1="\[\e[35;1m\]\[$(pwd -P)\] \[\e[32;1m\]\h \u \[\e[35;1m\]\j $(echo \${?\#\#0:}) \[\e[0m\]\t\n\[\e[32;1m\]\\$ \[\e[0m\]"
