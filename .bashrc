@@ -1,10 +1,53 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# set variable identifying the chroot you work in (used in the prompt below)
-# if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    # debian_chroot=$(cat /etc/debian_chroot)
-# fi
+__rightPrompt() {
+    date=$(date +%H:%M:%S)
+    printf "%*s" $COLUMNS "${date}"
+}
+
+# before any command is executed
+__preCommand() {
+    if [ -z "$AT_PROMPT" ]; then
+        return
+    fi
+
+    unset AT_PROMPT
+
+    tput sgr0 
+
+    # echo "Running PreCommand"
+}
+
+# after any command is executed
+__postCommand() {
+    exitCode="$?"
+    AT_PROMPT=1
+
+    # generate prompt
+    PS1="${rightPromptColor}$(tput sc; __rightPrompt; tput rc)$R${pathColor}$PWD$R ${jobsColor}\j$R ${hostNameColor}\h$R ${userNameColor}\u$R ${exitCodeColor}${exitCode}$R\n${commandStringColor}"
+    # PS1='\[\e[0m\]\[$(tput sc; __rightPrompt; tput rc)\]\[\e[0m\]\[\e[1;33m\]$PWD\[\e[0m\] \[\e[1;32m\]\j \[\e[1;33m\]\h \[\e[1;36m\]\u \[\e[1;35m\]${?##0;}\n\[\e[1;36m\]\[\e[0m\]\[\e[1;32m\]'
+
+    # don't execute on first prompt (when shell starts)
+    if [ -n "$FIRST_PROMPT" ]; then
+        unset FIRST_PROMPT
+        return
+    fi
+
+    tput sgr0
+
+    # echo "Running PostCommand"
+
+    # hack for sharing history between terminals
+    history -a && \
+    cat ~/.bash_history | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > /tmp/.bash_history$$ && \
+    history -c && \
+    mv -f /tmp/.bash_history$$ ~/.bash_history  && \
+    if [ "$EUID" = "0" ] && [ "$HOME" != "/root" ]; then 
+        who am i | cut -d\  -f1 | xargs -I{} chown {}:{} ~/.bash_history
+    fi
+    history -r
+}
 
 # enable programmable completion features 
 if ! shopt -oq posix; then
@@ -15,14 +58,17 @@ if ! shopt -oq posix; then
   fi
 fi
 
+trap "__preCommand" DEBUG
+
+FIRST_PROMPT=1
+PROMPT_COMMAND="__postCommand"
+
 # History settings
-export HISTSIZE=30000
-export HISTFILESIZE=30000
-export HISTCONTROL=ignorespace #lines starting with space in the history.
-export HISTIGNORE='&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
+HISTSIZE=30000
+HISTFILESIZE=30000
+HISTCONTROL=ignorespace #lines starting with space in the history.
+HISTIGNORE='&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
 shopt -s histappend # append to the history file, don't overwrite it
-# hack for sharing history between terminals
-export PROMPT_COMMAND="history -a && cat ~/.bash_history | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > /tmp/.bash_history$$ && history -c && mv /tmp/.bash_history$$ ~/.bash_history && history -r"
 
 # bash specific options
 shopt -s autocd       # cd without "cd", just directory
@@ -42,14 +88,11 @@ shopt -s mailwarn				# keep an eye on the mail file (access time)
 # posix shell options
 set -o notify					# notify when jobs running in background terminate
 
-PS1='\[\e[35;1m\]$PWD \[\e[32;1m\]\h \u \[\e[35;1m\]\j ${?##0:} \[\e[0m\]\t\n\[\e[32;1m\]\\$ \[\e[0m\]'
-
 ###################
 # ALIASES
 ###################
 
 alias r='sudo '
-alias ru='su -c '
 alias s='sed'
 alias a='awk'
 alias g='grep'
@@ -104,3 +147,96 @@ alias agr='apt-get remove'
 alias agp='apt-get purge'
 alias agu='apt-get update'
 alias agg='apt-get upgrade'
+
+###################
+# COLORS
+###################
+
+aFgBlack='\e[30m'
+aFgRed='\e[31m'
+aFgGreen='\e[32m'
+aFgYellow='\e[33m'
+aFgBlue='\e[34m'
+aFgMagenta='\e[35m'
+aFgCyan='\e[36m'
+aFgWhite='\e[37m'
+
+aBgBlack='\e[40m'
+aBgRed='\e[41m'
+aBgGreen='\e[42m'
+aBgYellow='\e[43m'
+aBgBlue='\e[44m'
+aBgMagenta='\e[45m'
+aBgCyan='\e[46m'
+aBgWhite='\e[47m'
+
+aFgBlackI='\e[1;30m'
+aFgRedI='\e[1;31m'
+aFgGreenI='\e[1;32m'
+aFgYellowI='\e[1;33m'
+aFgBlueI='\e[1;34m'
+aFgMagentaI='\e[1;35m'
+aFgCyanI='\e[1;36m'
+aFgWhiteI='\e[1;37m'
+
+R='\e[0m'
+sInvert='\e[7m'
+sBold='\e[1m'
+sUnderline='\e[4m'
+
+case "$TERM" in
+    linux*)
+        # ansi colors for dark tty
+        # less colors
+        lessBoldColor="$aFgYellowI"
+        lessUnderlineColor="$aFgCyan"
+
+        # prompt colors
+        rightPromptColor=""
+        pathColor="$aFgYellowI"
+        jobsColor="$aFgGreenI"
+        hostNameColor="$aFgYellowI"
+        userNameColor="$aFgCyanI"
+        exitCodeColor="$aFgMagentaI"
+        commandStringColor="$aFgCyanI"
+
+        if [ -x /usr/bin/dircolors ]; then
+            test -r ~/.dircolors.ansi-dark && eval "$(dircolors -b ~/.dircolors.ansi-dark)" || eval "$(dircolors -b)"
+        fi
+        ;;
+    *)
+        # ansi colors for light (primarily) or dark pts
+        # safe colors: redI,magI;blueI;green,cyan
+
+        # less colors
+        lessBoldColor="$aFgRedI"
+        lessUnderlineColor="$sUnderline"
+
+        # prompt colors
+        rightPromptColor=""
+        pathColor="$aFgRedI"
+        jobsColor="$aFgBlueI"
+        hostNameColor="$aFgGreen"
+        userNameColor="$aFgMagentaI"
+        exitCodeColor="$aFgCyan"
+        commandStringColor="$aFgCyan"
+
+        if [ -x /usr/bin/dircolors ]; then
+            test -r ~/.dircolors.ansi-universal && eval "$(dircolors -b ~/.dircolors.ansi-universal)" || eval "$(dircolors -b)"
+        fi
+        ;;
+esac
+
+export GREP_OPTIONS='--color=auto -i'
+export LESS="-iMRwMQ"
+# export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01' # colored GCC warnings and errors
+
+export LESS_TERMCAP_md=$(printf "${lessBoldColor}") # bold, commands and options in mans
+export LESS_TERMCAP_us=$(printf "${lessUnderlineColor}") # underline (maybe italic), misc options in mans
+export LESS_TERMCAP_me=$(printf "$R") # turn off bold, blink, underline
+export LESS_TERMCAP_ue=$(printf "$R") # stop underline
+export GREP_COLORS='ms=7:mc=7:sl=:cx=:fn=31:ln=31:bn=31:se=31'
+
+if [ -x /usr/share/source-highlight/src-hilite-lesspipe.sh ]; then
+    export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+fi
