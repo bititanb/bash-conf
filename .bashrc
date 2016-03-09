@@ -95,7 +95,7 @@ set -o notify					# notify when jobs running in background terminate
 alias r='sudo '
 alias s='sed'
 alias a='awk'
-alias g='grep'
+alias g='grep --color=auto -i'
 alias l='less'
 alias v='vim'
 alias gv='gvim'
@@ -227,7 +227,6 @@ case "$TERM" in
         ;;
 esac
 
-export GREP_OPTIONS='--color=auto -i'
 export LESS="-iMRwMQ"
 # export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01' # colored GCC warnings and errors
 
