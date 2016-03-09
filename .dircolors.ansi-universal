@@ -460,9 +460,9 @@ EXEC 01;31  # Unix
 
 # The brightmagenta (Solarized: purple) color is free for you to use for your
 # custom file type
-.gpg 34
-.gpg 34
-.pgp 34
+.gpg 01;35
+.gpg 01;35
+.pgp 01;35
 .asc 34
 .3des 34
 .aes 34

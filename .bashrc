@@ -199,10 +199,6 @@ case "$TERM" in
         userNameColor="$aFgCyanI"
         exitCodeColor="$aFgMagentaI"
         commandStringColor="$aFgCyanI"
-
-        if [ -x /usr/bin/dircolors ]; then
-            test -r ~/.dircolors.ansi-dark && eval "$(dircolors -b ~/.dircolors.ansi-dark)" || eval "$(dircolors -b)"
-        fi
         ;;
     *)
         # ansi colors for light (primarily) or dark pts
@@ -220,10 +216,6 @@ case "$TERM" in
         userNameColor="$aFgMagentaI"
         exitCodeColor="$aFgCyan"
         commandStringColor="$aFgCyan"
-
-        if [ -x /usr/bin/dircolors ]; then
-            test -r ~/.dircolors.ansi-universal && eval "$(dircolors -b ~/.dircolors.ansi-universal)" || eval "$(dircolors -b)"
-        fi
         ;;
 esac
 
@@ -238,4 +230,8 @@ export GREP_COLORS='ms=7:mc=7:sl=:cx=:fn=31:ln=31:bn=31:se=31'
 
 if [ -x /usr/share/source-highlight/src-hilite-lesspipe.sh ]; then
     export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+fi
+
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors.ansi-universal && eval "$(dircolors -b ~/.dircolors.ansi-universal)" || eval "$(dircolors -b)"
 fi
