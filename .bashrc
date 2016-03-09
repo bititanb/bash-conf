@@ -49,6 +49,7 @@ __postCommand() {
     history -r
 }
 
+# evening industry
 # enable programmable completion features 
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
