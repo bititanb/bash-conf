@@ -25,7 +25,7 @@ __postCommand() {
     AT_PROMPT=1
 
     # generate prompt
-    PS1="${rightPromptColor}$(tput sc; __rightPrompt; tput rc)$R${pathColor}$PWD$R ${jobsColor}\j$R ${hostNameColor}\h$R ${userNameColor}\u$R ${exitCodeColor}${exitCode}$R\n${commandStringColor}"
+    PS1="\[${rightPromptColor}\]\[$(tput sc; __rightPrompt; tput rc)\]$eR\[${pathColor}\]$PWD$eR \[${jobsColor}\]\j$eR \[${hostNameColor}\]\h$eR \[${userNameColor}\]\u$eR \[${exitCodeColor}\]\[${exitCode}\]$eR\n\[${commandStringColor}\]"
     # PS1='\[\e[0m\]\[$(tput sc; __rightPrompt; tput rc)\]\[\e[0m\]\[\e[1;33m\]$PWD\[\e[0m\] \[\e[1;32m\]\j \[\e[1;33m\]\h \[\e[1;36m\]\u \[\e[1;35m\]${?##0;}\n\[\e[1;36m\]\[\e[0m\]\[\e[1;32m\]'
 
     # don't execute on first prompt (when shell starts)
@@ -184,6 +184,8 @@ R='\e[0m'
 sInvert='\e[7m'
 sBold='\e[1m'
 sUnderline='\e[4m'
+
+eR='\[\e[0m\]'
 
 case "$TERM" in
     linux*)
