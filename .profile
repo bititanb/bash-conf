@@ -17,7 +17,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export MAILCHECK=15
-export LC_ALL=C
 
 if (command -v vim 2>- 1>-); then
     export EDITOR='vim'

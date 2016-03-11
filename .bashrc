@@ -1,6 +1,10 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+###################
+# FUNCTIONS
+###################
+
 __rightPrompt() {
     date=$(date +%H:%M:%S)
     printf "%*s" $COLUMNS "${date}"
@@ -14,7 +18,7 @@ __preCommand() {
 
     unset AT_PROMPT
 
-    tput sgr0 
+    tput sgr0
 
     # echo "Running PreCommand"
 }
@@ -43,14 +47,23 @@ __postCommand() {
     cat ~/.bash_history | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > /tmp/.bash_history$$ && \
     history -c && \
     mv -f /tmp/.bash_history$$ ~/.bash_history  && \
-    if [ "$EUID" = "0" ] && [ "$HOME" != "/root" ]; then 
+    if [ "$EUID" = "0" ] && [ "$HOME" != "/root" ]; then
         who am i | cut -d\  -f1 | xargs -I{} chown {}:{} ~/.bash_history
     fi
     history -r
 }
 
-# evening industry
-# enable programmable completion features 
+cl() {
+    cd "$@" && ls;
+}
+
+###################
+# SETTINGS
+###################
+
+export LC_ALL=C
+
+# enable programmable completion features
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
     . /usr/share/bash-completion/bash_completion
@@ -80,7 +93,7 @@ shopt -s checkwinsize # check the window size after each command and, if necessa
 shopt -s cmdhist          			# save multi-line commands in history as single line
 shopt -s dirspell     # correct mistakes in dir name
 shopt -s dotglob       # include dot files during filename expansions
-shopt -s extglob      
+shopt -s extglob
 shopt -s globstar       # ** for include subdirs
 shopt -s histverify
 shopt -s nocaseglob        # case-insensitive pathname expansion
@@ -205,8 +218,6 @@ case "$TERM" in
         ;;
     *)
         # ansi colors for light (primarily) or dark pts
-        # safe colors: redI,magI;blueI;green,cyan
-
         # less colors
         lessBoldColor="$aFgRedI"
         lessUnderlineColor="$sUnderline"
