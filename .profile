@@ -33,17 +33,17 @@ if (command -v less 2>- 1>-); then
     export PAGER='less'
 fi
 
-if (command -v qutebrowser 2>- 1>-); then
-    export BROWSER='qutebrowser'
-elif (command -v firefox 2>- 1>-); then
-    export BROWSER='firefox'
-elif (command -v iceweasel 2>- 1>-); then
-    export BROWSER='iceweasel'
-elif (command -v chromium 2>- 1>-); then
-    export BROWSER='chromium'
-elif (command -v lynx 2>- 1>-); then
-    export BROWSER='lynx'
-fi
+# if (command -v qutebrowser 2>- 1>-); then
+    # export BROWSER='qutebrowser'
+# elif (command -v firefox 2>- 1>-); then
+    # export BROWSER='firefox'
+# elif (command -v iceweasel 2>- 1>-); then
+    # export BROWSER='iceweasel'
+# elif (command -v chromium 2>- 1>-); then
+    # export BROWSER='chromium'
+# elif (command -v lynx 2>- 1>-); then
+    # export BROWSER='lynx'
+# fi
 
 # if running bash include .bashrc if it exists
 if [ -n "$BASH_VERSION" ]; then
