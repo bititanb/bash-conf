@@ -54,7 +54,8 @@ __postCommand() {
 }
 
 cl() {
-    cd "$@" && ls;
+    cd "$@" && ls -Xh --time-style=iso --color=auto;
+
 }
 
 ###################
@@ -106,57 +107,57 @@ set -o notify					# notify when jobs running in background terminate
 # ALIASES
 ###################
 
-alias r='sudo '
-alias s='sed'
-alias a='awk'
-alias g='grep --color=auto'
-alias l='less'
-alias v='vim'
-alias gv='gvim'
-alias w='wget'
-alias f='find'
-alias t='tar'
-alias j='jobs'
-alias p='ping'
-alias m='man'
-alias br="$BROWSER"
-alias cu='curl'
-alias ki='kill'
-alias pk='pkill'
-alias ka='killall'
-alias cm='chmod'
-alias ec='echo'
-alias tr='traceroute'
-alias co='chown'
-alias st='stat'
-alias xa='xargs'
-alias vr='virsh'
-alias he='head'
-alias ta='tail'
-alias se='service'
-alias vc='vcsh'
-alias md='mkdir'
-alias wh='which'
-alias pa='ps aux'
-alias ls='ls -X --color=auto'
-alias ll='ls -X -hl --time-style=iso --color=auto'
-alias lt='ls -X -hl -tr --time-style=iso --color=auto'
+alias grep='grep --color=auto'
+alias ls='ls -Xh --time-style=iso --color=auto'
+# alias r='sudo '
+# alias s='sed'
+# alias a='awk'
+# alias l='less'
+# alias v='vim'
+# alias gv='gvim'
+# alias w='wget'
+# alias f='find'
+# alias t='tar'
+# alias j='jobs'
+# alias p='ping'
+# alias m='man'
+# alias br="$BROWSER"
+# alias cu='curl'
+# alias ki='kill'
+# alias pk='pkill'
+# alias ka='killall'
+# alias cm='chmod'
+# alias ec='echo'
+# alias tr='traceroute'
+# alias co='chown'
+# alias st='stat'
+# alias xa='xargs'
+# alias vr='virsh'
+# alias he='head'
+# alias ta='tail'
+# alias se='service'
+# alias vc='vcsh'
+# alias md='mkdir'
+# alias wh='which'
+# alias pa='ps aux'
+# alias ll='ls -X -hl --time-style=iso --color=auto'
+# alias lt='ls -X -hl -tr --time-style=iso --color=auto'
 # alias le='LC_ALL=C '
 
-alias d='dpkg'
+# alias d='dpkg'
 
-alias af='apt-file'
+# alias af='apt-file'
 
-alias ac='apt-cache'
-alias acs='apt-cache search'
-alias ach='apt-cache show'
+# alias ac='apt-cache'
+# alias acs='apt-cache search'
+# alias ach='apt-cache show'
 
-alias ag='apt-get'
-alias agi='apt-get install'
-alias agr='apt-get remove'
-alias agp='apt-get purge'
-alias agu='apt-get update'
-alias agg='apt-get upgrade'
+# alias ag='apt-get'
+# alias agi='apt-get install'
+# alias agr='apt-get remove'
+# alias agp='apt-get purge'
+# alias agu='apt-get update'
+# alias agg='apt-get upgrade'
 
 ###################
 # COLORS
