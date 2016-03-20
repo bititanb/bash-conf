@@ -19,8 +19,6 @@ __preCommand() {
     unset AT_PROMPT
 
     tput sgr0
-
-    # echo "Running PreCommand"
 }
 
 # after any command is executed
@@ -30,7 +28,6 @@ __postCommand() {
 
     # generate prompt
     PS1="\[${rightPromptColor}\]\[$(tput sc; __rightPrompt; tput rc)\]$eR\[${pathColor}\]$PWD$eR \[${jobsColor}\]\j$eR \[${hostNameColor}\]\h$eR \[${userNameColor}\]\u$eR \[${exitCodeColor}\]\[${exitCode}\]$eR\n\[${commandStringColor}\]"
-    # PS1='\[\e[0m\]\[$(tput sc; __rightPrompt; tput rc)\]\[\e[0m\]\[\e[1;33m\]$PWD\[\e[0m\] \[\e[1;32m\]\j \[\e[1;33m\]\h \[\e[1;36m\]\u \[\e[1;35m\]${?##0;}\n\[\e[1;36m\]\[\e[0m\]\[\e[1;32m\]'
 
     # don't execute on first prompt (when shell starts)
     if [ -n "$FIRST_PROMPT" ]; then
@@ -39,8 +36,6 @@ __postCommand() {
     fi
 
     tput sgr0
-
-    # echo "Running PostCommand"
 
     # hack for sharing history between terminals
     history -a && \
@@ -62,7 +57,12 @@ cl() {
 # SETTINGS
 ###################
 
+# environment variables
 export LC_ALL=C
+
+if ( "$TERM" -ne "linux" ); then
+    export TERM="xterm-256color"
+fi
 
 # enable programmable completion features
 if ! shopt -oq posix; then
@@ -109,55 +109,6 @@ set -o notify					# notify when jobs running in background terminate
 
 alias grep='grep --color=auto'
 alias ls='ls -Xh --time-style=iso --color=auto'
-# alias r='sudo '
-# alias s='sed'
-# alias a='awk'
-# alias l='less'
-# alias v='vim'
-# alias gv='gvim'
-# alias w='wget'
-# alias f='find'
-# alias t='tar'
-# alias j='jobs'
-# alias p='ping'
-# alias m='man'
-# alias br="$BROWSER"
-# alias cu='curl'
-# alias ki='kill'
-# alias pk='pkill'
-# alias ka='killall'
-# alias cm='chmod'
-# alias ec='echo'
-# alias tr='traceroute'
-# alias co='chown'
-# alias st='stat'
-# alias xa='xargs'
-# alias vr='virsh'
-# alias he='head'
-# alias ta='tail'
-# alias se='service'
-# alias vc='vcsh'
-# alias md='mkdir'
-# alias wh='which'
-# alias pa='ps aux'
-# alias ll='ls -X -hl --time-style=iso --color=auto'
-# alias lt='ls -X -hl -tr --time-style=iso --color=auto'
-# alias le='LC_ALL=C '
-
-# alias d='dpkg'
-
-# alias af='apt-file'
-
-# alias ac='apt-cache'
-# alias acs='apt-cache search'
-# alias ach='apt-cache show'
-
-# alias ag='apt-get'
-# alias agi='apt-get install'
-# alias agr='apt-get remove'
-# alias agp='apt-get purge'
-# alias agu='apt-get update'
-# alias agg='apt-get upgrade'
 
 ###################
 # COLORS
@@ -231,7 +182,6 @@ case "$TERM" in
 esac
 
 export LESS="-iMRwMQ"
-# export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01' # colored GCC warnings and errors
 
 export LESS_TERMCAP_md=$(printf "${lessBoldColor}") # bold, commands and options in mans
 export LESS_TERMCAP_us=$(printf "${lessUnderlineColor}") # underline (maybe italic), misc options in mans
