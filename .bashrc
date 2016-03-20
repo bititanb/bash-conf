@@ -60,9 +60,17 @@ cl() {
 # environment variables
 export LC_ALL=C
 
-if ( "$TERM" -ne "linux" ); then
-    export TERM="xterm-256color"
-fi
+case $TERM in
+    linux)
+        ;;
+    screen)
+        ;;
+    *-256color)
+        ;;
+    *)
+        export TERM="$TERM-256color"
+        ;;
+esac
 
 # enable programmable completion features
 if ! shopt -oq posix; then
