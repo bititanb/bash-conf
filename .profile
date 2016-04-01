@@ -18,30 +18,30 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export MAILCHECK=15
 
-if (command -v vim 2>- 1>-); then
+if (command -v vim 2>&1 1>/dev/null); then
     export EDITOR='vim'
     export VISUAL='vim'
-elif (command -v vim.tiny 2>- 1>-); then
+elif (command -v vim.tiny 2>&1 1>/dev/null); then
     export EDITOR='vim.tiny'
     export VISUAL='vim.tiny'
-elif (command -v vi 2>- 1>-); then
+elif (command -v vi 2>&1 1>/dev/null); then
     export EDITOR='vi'
     export VISUAL='vi'
 fi
 
-if (command -v less 2>- 1>-); then
+if (command -v less 2>&1 1>/dev/null); then
     export PAGER='less'
 fi
 
-# if (command -v qutebrowser 2>- 1>-); then
+# if (command -v qutebrowser 2>&1 1>/dev/null); then
     # export BROWSER='qutebrowser'
-# elif (command -v firefox 2>- 1>-); then
+# elif (command -v firefox 2>&1 1>/dev/null); then
     # export BROWSER='firefox'
-# elif (command -v iceweasel 2>- 1>-); then
+# elif (command -v iceweasel 2>&1 1>/dev/null); then
     # export BROWSER='iceweasel'
-# elif (command -v chromium 2>- 1>-); then
+# elif (command -v chromium 2>&1 1>/dev/null); then
     # export BROWSER='chromium'
-# elif (command -v lynx 2>- 1>-); then
+# elif (command -v lynx 2>&1 1>/dev/null); then
     # export BROWSER='lynx'
 # fi
 
