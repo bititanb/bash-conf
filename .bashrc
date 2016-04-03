@@ -29,7 +29,7 @@ __postCommand() {
 
     # generate prompt
     #PS1="\[${rightPromptColor}\]\[$(tput sc; __rightPrompt; tput rc)\]$eR\[${pathColor}\]$PWD$eR \[${jobsColor}\]\j$eR \[${hostNameColor}\]\h$eR \[${userNameColor}\]\u$eR \[${exitCodeColor}\]\[${exitCode}\]$eR\n\[${commandStringColor}\]"
-    PS1="${pathColor}\]$PWD$eR \[${jobsColor}\]\j$eR \[${hostNameColor}\]\h$eR \[${userNameColor}\]\u$eR \[${exitCodeColor}\]\[${exitCode}\]$eR\n\[${commandStringColor}\]"
+    PS1="\[${pathColor}\]$PWD$eR \[${jobsColor}\]\j$eR \[${hostNameColor}\]\h$eR \[${userNameColor}\]\u$eR \[${exitCodeColor}\]\[${exitCode}\]$eR\n\[${commandStringColor}\]"
 
     # don't execute on first prompt (when shell starts)
     if [ -n "$FIRST_PROMPT" ]; then
