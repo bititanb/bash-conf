@@ -90,8 +90,8 @@ FIRST_PROMPT=1
 PROMPT_COMMAND="__postCommand"
 
 # History settings
-HISTSIZE=30000
-HISTFILESIZE=30000
+HISTSIZE=100000
+HISTFILESIZE=100000
 HISTCONTROL=ignorespace #lines starting with space in the history.
 HISTIGNORE='&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
 shopt -s histappend # append to the history file, don't overwrite it
