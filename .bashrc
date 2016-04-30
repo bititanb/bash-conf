@@ -1,15 +1,10 @@
-#!/bin/bash -exv
+#!/bin/bash
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
 ###################
 # FUNCTIONS
 ###################
-
-__rightPrompt() {
-    date=$(date +%H:%M:%S)
-    printf "%*s" $COLUMNS "${date}"
-}
 
 # before any command is executed
 __preCommand() {
@@ -28,7 +23,6 @@ __postCommand() {
     AT_PROMPT=1
 
     # generate prompt
-    #PS1="\[${rightPromptColor}\]\[$(tput sc; __rightPrompt; tput rc)\]$eR\[${pathColor}\]$PWD$eR \[${jobsColor}\]\j$eR \[${hostNameColor}\]\h$eR \[${userNameColor}\]\u$eR \[${exitCodeColor}\]\[${exitCode}\]$eR\n\[${commandStringColor}\]"
     PS1="\[${pathColor}\]$PWD$eR \[${jobsColor}\]\j$eR \[${hostNameColor}\]\h$eR \[${userNameColor}\]\u$eR \[${exitCodeColor}\]\[${exitCode}\]$eR\n\[${commandStringColor}\]"
 
     # don't execute on first prompt (when shell starts)
@@ -50,18 +44,9 @@ __postCommand() {
     history -r
 }
 
-cl() {
-    cd "$@" && ls -Xh --time-style=iso --color=auto;
-
-}
-
 ###################
 # SETTINGS
 ###################
-
-# environment variables
-#export LC_ALL=C
-#export LC_ALL=en_US.UTF-8
 
 case $TERM in
     linux)
@@ -90,26 +75,17 @@ FIRST_PROMPT=1
 PROMPT_COMMAND="__postCommand"
 
 # History settings
-HISTSIZE=100000
-HISTFILESIZE=100000
+HISTSIZE=200000
+HISTFILESIZE=200000
 HISTCONTROL=ignorespace #lines starting with space in the history.
 HISTIGNORE='&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
 shopt -s histappend # append to the history file, don't overwrite it
 
 # bash specific options
-shopt -s autocd       # cd without "cd", just directory
-shopt -s cdable_vars				# set the bash option so that no '$' is required (disallow write access to terminal)
-shopt -s cdspell				# this will correct minor spelling errors in a cd command
 shopt -s checkjobs              # second "exit" needed if running any jobs
 shopt -s checkwinsize # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s cmdhist          			# save multi-line commands in history as single line
-shopt -s dirspell     # correct mistakes in dir name
-shopt -s dotglob       # include dot files during filename expansions
-shopt -s extglob
-shopt -s globstar       # ** for include subdirs
 shopt -s histverify
-shopt -s nocaseglob        # case-insensitive pathname expansion
-shopt -s mailwarn				# keep an eye on the mail file (access time)
 
 # posix shell options
 set -o notify					# notify when jobs running in background terminate
@@ -119,7 +95,7 @@ set -o notify					# notify when jobs running in background terminate
 ###################
 
 alias grep='grep --color=auto'
-alias ls='ls -Xh --time-style=iso --color=auto'
+alias ls='ls --color=auto'
 
 ###################
 # COLORS
@@ -192,7 +168,7 @@ case "$TERM" in
         ;;
 esac
 
-export LESS="-iMRwMQ"
+export LESS="-MRQ"
 
 export LESS_TERMCAP_md=$(printf "${lessBoldColor}") # bold, commands and options in mans
 export LESS_TERMCAP_us=$(printf "${lessUnderlineColor}") # underline (maybe italic), misc options in mans
