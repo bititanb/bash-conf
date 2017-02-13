@@ -1,10 +1,18 @@
 #!/bin/bash
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
 
 ###################
-# FUNCTIONS
+# FUNCTIONS (non-interactive usage)
 ###################
+
+# gitignore.io
+gi() { curl -L -s https://www.gitignore.io/api/$@ ; }
+
+###################
+# FUNCTIONS (interactive usage)
+###################
+
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
 
 # before any command is executed
 __preCommand() {
@@ -43,6 +51,7 @@ __postCommand() {
     fi
     history -r
 }
+
 
 ###################
 # SETTINGS
