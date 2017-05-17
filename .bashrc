@@ -185,6 +185,9 @@ export LESS_TERMCAP_me=$(printf "$R") # turn off bold, blink, underline
 export LESS_TERMCAP_ue=$(printf "$R") # stop underline
 export GREP_COLORS='ms=7:mc=7:sl=:cx=:fn=31:ln=31:bn=31:se=31'
 
+# workaround for bug in ranger filemanager
+export PAGER="less"
+
 if [ -x /usr/share/source-highlight/src-hilite-lesspipe.sh ]; then
     export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
 fi
