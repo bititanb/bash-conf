@@ -10,9 +10,17 @@ export PATH="$HOME/.gem/ruby/2.4.0/bin:$HOME/.local/bin:$HOME/git/linux-utils:$H
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+
 export HISTTIMEFORMAT="%d/%m/%y %T "
-export EDITOR="vim"
-export VISUAL="vim"
+
+export TERM_EXEC="alacritty"
+export EDITOR="nvim"
+export VISUAL="$EDITOR"
+export GUI_EDITOR="nvim-qt"
+export WEB_BROWSER="chromium"
+export FILE_MANAGER="ranger"
+export GUI_FILE_MANAGER="$TERM_EXEC -e $FILE_MANAGER"
+
 export QT_QPA_PLATFORMTHEME="qt5ct"
 
 # if running bash include .bashrc if it exists
