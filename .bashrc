@@ -7,6 +7,13 @@
 # gitignore.io
 gi() { curl -L -s https://www.gitignore.io/api/$@ ; }
 
+nt() {
+  cur_desktop="$(wmctrl -d | grep ' \* ' | cut -d' ' -f1)"
+  notify-send -i /usr/share/icons/breeze/emotes/22/face-smile.svg \
+    "Command DONE on desktop ${cur_desktop}."
+}
+
+
 ###################
 # FUNCTIONS (interactive usage)
 ###################
@@ -41,45 +48,56 @@ __postCommand() {
 
   tput sgr0
 
-  # # hack for sharing history between terminals
-  # # HISTCONTROL=ignoredups not tested with this, better turn it off, duplicates
-  # # removing already implemented here
-  # hist_file="$HOME/.bash_history"
-  # temp_file="/tmp/.bash_history$$"
-  # history -a && \
-  #   if [ -n "$HISTTIMEFORMAT" ]; then
-  #     # this works if HISTTIMEFORMAT is enabled (though will delete all strings without timestamps)
-  #     cat $hist_file |
-  #       awk \
-  #       'BEGIN { timestamp = "#[0-9]{10}$" } \
-  #       $0 ~ timestamp { line_time = $0; getline line_cmd; \
-  #         while (line_cmd ~ timestamp) { line_time = line_cmd; getline line_cmd }; \
-  #         array[++c] = line_time " " line_cmd } \
-  #       END { for (line in array) { print array[line] } }' |
-  #       sort -k2 -k1r | uniq -f1 | sort | awk '{ sub(" ", "\n") ; print }' \
-  #       > $temp_file || failed=1
-  #     total_entries="$(($(wc -l $hist_file | cut -d' ' -f1) / 2))"
-  #   else
-  #     # this works only if HISTTIMEFORMAT is disabled
-  #     cat $hist_file | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > $temp_file || failed=1
-  #     total_entries="$(wc -l $hist_file | cut -d' ' -f1)"
-  #   fi
+  # hack for sharing history between terminals
+  # HISTCONTROL=ignoredups not tested with this, better turn it off, duplicates
+  # removing already implemented here
+  hist_file="$HOME/.bash_history"
+  temp_file="/tmp/.bash_history$$"
+  history -a && \
+    if [ -n "$HISTTIMEFORMAT" ]; then
+      # this works if HISTTIMEFORMAT is enabled (though will delete all strings without timestamps)
+      cat $hist_file |
+        awk \
+        'BEGIN { timestamp = "#[0-9]{10}$" } \
+        $0 ~ timestamp { line_time = $0; getline line_cmd; \
+          while (line_cmd ~ timestamp) { line_time = line_cmd; getline line_cmd }; \
+          array[++c] = line_time " " line_cmd } \
+        END { for (line in array) { print array[line] } }' |
+        sort -k2 -k1r | uniq -f1 | sort | awk '{ sub(" ", "\n") ; print }' \
+        > $temp_file || failed=1
+      total_entries="$(($(wc -l $hist_file | cut -d' ' -f1) / 2))"
+    else
+      # this works only if HISTTIMEFORMAT is disabled
+      cat $hist_file | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > $temp_file || failed=1
+      total_entries="$(wc -l $hist_file | cut -d' ' -f1)"
+    fi
 
-  # if [ "$failed" != 1 ]; then
-  #   # make backups of last two .bash_history (triggered on every 100 new
-  #   # history entries) in case something goes wrong
-  #   if [ $(( $total_entries % 100 )) = 0 ]; then
-  #     mv -f /var/tmp/bash_hist.0 /var/tmp/bash_hist.1
-  #     cp -f $hist_file /var/tmp/bash_hist.0
-  #   fi
+  # make backups of last X .bash_histories (triggered on every Y new
+  # history entries) in case something goes wrong
+  if [ "$failed" != 1 ]; then
+    backups_total=20
+    backup_every=100
+    filename="bash_hist"
 
-  #   history -c && \
-  #   mv -f $temp_file $hist_file  && \
-  #   if [ "$EUID" = "0" ] && [ "$HOME" != "/root" ]; then
-  #     who am i | cut -d\  -f1 | xargs -I{} chown {}:{} $hist_file
-  #   fi
-  #   history -r
-  # fi
+    if [ $(( total_entries % backup_every )) = 0 ]; then
+      cd /var/tmp || return 1
+
+      for (( i=backups_total; i>=0; i-- )); do
+        if [ -f "${filename}.${i}" ]; then
+          mv -f "${filename}.${i}" "${filename}.$((++i))"
+        fi
+      done
+
+      cp -f "$hist_file" "${filename}.0"
+    fi
+
+    history -c && \
+    mv -f $temp_file $hist_file  && \
+    if [ "$EUID" = "0" ] && [ "$HOME" != "/root" ]; then
+      who am i | cut -d\  -f1 | xargs -I{} chown {}:{} $hist_file
+    fi
+    history -r
+  fi
   }
 
 ###################
@@ -125,7 +143,7 @@ shopt -s histappend # append to the history file, don't overwrite it
 shopt -s checkjobs              # second "exit" needed if running any jobs
 shopt -s checkwinsize # check the window size after each command and, if necessary, update the values of LINES and COLUMNS.
 shopt -s cmdhist          			# save multi-line commands in history as single line
-shopt -s histverify
+#shopt -s histverify
 
 # posix shell options
 set -o notify					# notify when jobs running in background terminate
