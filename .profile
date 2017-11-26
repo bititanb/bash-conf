@@ -7,6 +7,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# needed for .XCompose to be read
+export GTK_IM_MODULE=xim
+
 # linuxbrew
 # export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 # export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"

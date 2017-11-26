@@ -245,3 +245,6 @@ esac
 # if [ -x /usr/bin/dircolors ]; then
 #   test -r ~/.dircolors.ansi-universal && eval "$(dircolors -b ~/.dircolors.ansi-universal)" || eval "$(dircolors -b)"
 # fi
+
+# needed for vim-gnupg
+export GPG_TTY='tty'
