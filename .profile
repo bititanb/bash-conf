@@ -17,7 +17,7 @@ export GTK_IM_MODULE=xim
 
 # $PAGER needed for some programs
 export PAGER="less"
-export TERM_EXEC="alacritty-t3"
+export TERM_EXEC="alacritty"
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export GUI_EDITOR="gnvim"
