@@ -48,56 +48,10 @@ __postCommand() {
 
   tput sgr0
 
-  # hack for sharing history between terminals
-  # HISTCONTROL=ignoredups not tested with this, better turn it off, duplicates
-  # removing already implemented here
-  hist_file="$HOME/.bash_history"
-  temp_file="/tmp/.bash_history$$"
-  history -a && \
-    if [ -n "$HISTTIMEFORMAT" ]; then
-      # this works if HISTTIMEFORMAT is enabled (though will delete all strings without timestamps)
-      cat $hist_file |
-        awk \
-        'BEGIN { timestamp = "#[0-9]{10}$" } \
-        $0 ~ timestamp { line_time = $0; getline line_cmd; \
-          while (line_cmd ~ timestamp) { line_time = line_cmd; getline line_cmd }; \
-          array[++c] = line_time " " line_cmd } \
-        END { for (line in array) { print array[line] } }' |
-        sort -k2 -k1r | uniq -f1 | sort | awk '{ sub(" ", "\n") ; print }' \
-        > $temp_file || failed=1
-      total_entries="$(($(wc -l $hist_file | cut -d' ' -f1) / 2))"
-    else
-      # this works only if HISTTIMEFORMAT is disabled
-      cat $hist_file | nl | sort -k2 -k1nr | uniq -f1 | sort -n | cut -c8- > $temp_file || failed=1
-      total_entries="$(wc -l $hist_file | cut -d' ' -f1)"
-    fi
-
-  # make backups of last X .bash_histories (triggered on every Y new
-  # history entries) in case something goes wrong
-  if [ "$failed" != 1 ]; then
-    backups_total=20
-    backup_every=100
-    filename="bash_hist"
-
-    if [ $(( total_entries % backup_every )) = 0 ]; then
-      cd /var/tmp || return 1
-
-      for (( i=backups_total; i>=0; i-- )); do
-        if [ -f "${filename}.${i}" ]; then
-          mv -f "${filename}.${i}" "${filename}.$((++i))"
-        fi
-      done
-
-      cp -f "$hist_file" "${filename}.0"
-    fi
-
-    history -c && \
-    mv -f $temp_file $hist_file  && \
-    if [ "$EUID" = "0" ] && [ "$HOME" != "/root" ]; then
-      who am i | cut -d\  -f1 | xargs -I{} chown {}:{} $hist_file
-    fi
-    history -r
-  fi
+  # sync history between terminals
+  history -a
+  history -c
+  history -r
   }
 
 ###################
@@ -133,7 +87,7 @@ PROMPT_COMMAND="__postCommand"
 # History settings
 HISTSIZE=20000
 HISTFILESIZE=20000
-HISTCONTROL=ignorespace,ignoredups #lines starting with space in the history.
+HISTCONTROL=ignorespace,ignoredups,erasedups #lines starting with space in the history.
 HISTIGNORE='zsh:reset:cd ~:cd -:git status:top:ps aux:%:%1:%2:%3:&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
 # better keep history dates disabled - it breaks shared history hack
 HISTTIMEFORMAT="%d/%m/%y %T "
