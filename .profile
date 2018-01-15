@@ -25,6 +25,10 @@ export WEB_BROWSER="firefox"
 export FILE_MANAGER="ranger"
 export GUI_FILE_MANAGER="$TERM_EXEC -e $FILE_MANAGER"
 
+# for chef development
+# export CHEF_ENV=dev
+# export GIT_REPOS_DIR="$HOME/git"
+
 # export QT_QPA_PLATFORMTHEME="qt5ct"
 
 ##############################################
@@ -49,7 +53,7 @@ case "$TERM" in
 	;;
 esac
 
-export LESS="-MRQ"
+export LESS="-MRQFX"
 export LESS_TERMCAP_md=$(printf "${lessBoldColor}") # bold, commands and options in mans
 export LESS_TERMCAP_us=$(printf "${lessUnderlineColor}") # underline (maybe italic), misc options in mans
 export LESS_TERMCAP_me=$(printf "$R") # turn off bold, blink, underline
