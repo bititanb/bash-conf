@@ -90,7 +90,7 @@ HISTFILESIZE=20000
 HISTCONTROL=ignorespace,ignoredups,erasedups #lines starting with space in the history.
 HISTIGNORE='zsh:reset:cd ~:cd -:git status:top:ps aux:%:%1:%2:%3:&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l:ls -t'
 # better keep history dates disabled - it breaks shared history hack
-HISTTIMEFORMAT="%d/%m/%y %T "
+# HISTTIMEFORMAT="%d/%m/%y %T "
 shopt -s histappend # append to the history file, don't overwrite it
 
 # bash specific options
