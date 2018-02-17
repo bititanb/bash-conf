@@ -1,6 +1,12 @@
 #!/bin/bash
 
 ###################
+# ALIASES
+###################
+
+alias awshb='aws --endpoint-url http://hb.bizmrg.com'
+
+###################
 # FUNCTIONS (non-interactive usage)
 ###################
 

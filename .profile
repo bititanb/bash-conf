@@ -9,10 +9,11 @@ PATH="$HOME/node_modules/.bin:$PATH"
 PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d -printf %p:)$PATH"
 PATH="$HOME/git/linux-utils:$PATH"
 export PATH
-
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # needed for .XCompose to be read
 export GTK_IM_MODULE=xim
@@ -56,7 +57,7 @@ case "$TERM" in
 	;;
 esac
 
-export LESS="-MRQ"
+export LESS="-MRQFX"
 export LESS_TERMCAP_md=$(printf "${lessBoldColor}") # bold, commands and options in mans
 export LESS_TERMCAP_us=$(printf "${lessUnderlineColor}") # underline (maybe italic), misc options in mans
 export LESS_TERMCAP_me=$(printf "$R") # turn off bold, blink, underline
