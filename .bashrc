@@ -208,3 +208,7 @@ esac
 
 # needed for vim-gnupg
 export GPG_TTY='tty'
+
+# for phpbrew
+source "$HOME/.phpbrew/bashrc"
+

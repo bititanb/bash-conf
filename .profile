@@ -2,7 +2,8 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/node_modules/.bin:$HOME/go/bin:$HOME/.gem/ruby/2.5.0/bin:$HOME/git/linux-utils:/opt/unreal-engine/Engine/Binaries/Linux:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
+export PATH="$HOME/bin:$HOME/.local/bin:$HOME/node_modules/.bin:$HOME/go/bin:$HOME/.gem/ruby/2.5.0/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/git/linux-utils:/opt/unreal-engine/Engine/Binaries/Linux:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
+export PATH="vendor/bin:$PATH"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
