@@ -2,8 +2,19 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-export PATH="$HOME/bin:$HOME/.local/bin:$HOME/node_modules/.bin:$HOME/go/bin:$HOME/.gem/ruby/2.5.0/bin:$HOME/.gem/ruby/2.4.0/bin:$HOME/git/linux-utils:/opt/unreal-engine/Engine/Binaries/Linux:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
-export PATH="vendor/bin:$PATH"
+# base PATH
+PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
+# golang
+PATH="$HOME/go/bin:$PATH"
+# nodejs
+PATH="$HOME/node_modules/.bin:$PATH"
+# ruby
+PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
+# customs
+PATH="$HOME/git/linux-utils:$PATH"
+PATH="vendor/bin:$PATH"
+export PATH
+
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
@@ -27,10 +38,6 @@ export GUI_EDITOR="gnvim"
 export WEB_BROWSER="firefox"
 export FILE_MANAGER="ranger"
 export GUI_FILE_MANAGER="$TERM_EXEC -e $FILE_MANAGER"
-
-# for chef development
-# export CHEF_ENV=dev
-# export GIT_REPOS_DIR="$HOME/git"
 
 # export QT_QPA_PLATFORMTHEME="qt5ct"
 
