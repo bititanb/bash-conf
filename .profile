@@ -10,6 +10,8 @@ PATH="$HOME/go/bin:$PATH"
 PATH="$HOME/node_modules/.bin:$PATH"
 # ruby
 PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
+# chef
+PATH="$(find ~/.chefdk/gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
 # customs
 PATH="$HOME/git/linux-utils:$PATH"
 PATH="vendor/bin:$PATH"

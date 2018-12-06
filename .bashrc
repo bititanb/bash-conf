@@ -27,6 +27,10 @@ nt() {
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+if [ -e /usr/share/git/completion/git-prompt.sh ]; then
+  source /usr/share/git/completion/git-prompt.sh
+fi
+
 # before any command is executed
 __preCommand() {
   if [ -z "$AT_PROMPT" ]; then
@@ -42,9 +46,13 @@ __preCommand() {
 __postCommand() {
   exitCode="$?"
   AT_PROMPT=1
+  GIT_PS1_SHOWDIRTYSTATE=1
+  GIT_PS1_SHOWSTASHSTATE=1
+  GIT_PS1_SHOWUNTRACKEDFILES=1
+  GIT_PS1_SHOWUPSTREAM='auto'
 
   # generate prompt
-  PS1="\[${pathColor}\]$PWD$eR \[${jobsColor}\]\j$eR \[${hostNameColor}\]\h$eR \[${userNameColor}\]\u$eR \[${exitCodeColor}\]\[${exitCode}\]$eR \[${timeColor}\]\t\n\[${commandStringColor}\]"
+  PS1="\$ \[${userNameColor}\]\u$eR \[${hostNameColor}\]\h$eR \[${pathColor}\]\w$eR \[${jobsColor}\]j\j$eR \[${exitCodeColor}\]e\[${exitCode}\]$eR \[${timeColor}\]\t$eR\[${branchColor}\]\$(__git_ps1 \" (%s)\")$eR\n\[${commandStringColor}\]"
 
   # don't execute on first prompt (when shell starts)
   if [ -n "$FIRST_PROMPT" ]; then
@@ -58,7 +66,7 @@ __postCommand() {
   history -a
   history -c
   history -r
-  }
+}
 
 ###################
 # SETTINGS
@@ -164,8 +172,9 @@ case "$TERM" in
     rightPromptColor=""
     pathColor="$aFgYellowI"
     jobsColor="$aFgGreenI"
-    hostNameColor="$aFgYellowI"
-    userNameColor="$aFgCyanI"
+    branchColor="$aFgYellowI"
+    userNameColor="$aFgYellowI"
+    hostNameColor="$aFgCyanI"
     exitCodeColor="$aFgMagentaI"
     timeColor="$aFgGreenI"
     commandStringColor="$aFgCyanI"
@@ -181,6 +190,7 @@ case "$TERM" in
     pathColor="$aFgRedI"
     jobsColor="$aFgBlueI"
     hostNameColor="$aFgGreen"
+    branchColor="$aFgGreen"
     userNameColor="$aFgMagentaI"
     exitCodeColor="$aFgCyan"
     commandStringColor="$aFgCyan"
@@ -205,6 +215,7 @@ esac
 # if [ -x /usr/bin/dircolors ]; then
 #   test -r ~/.dircolors.ansi-universal && eval "$(dircolors -b ~/.dircolors.ansi-universal)" || eval "$(dircolors -b)"
 # fi
+
 
 # needed for vim-gnupg
 export GPG_TTY='tty'
