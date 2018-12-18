@@ -3,19 +3,18 @@
 #umask 022
 
 # base PATH
-PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
+export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
+
 # golang
-PATH="$HOME/go/bin:$PATH"
-# nodejs
-PATH="$HOME/node_modules/.bin:$PATH"
-# ruby
-PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
-# chef
-PATH="$(find ~/.chefdk/gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
-# customs
-PATH="$HOME/git/linux-utils:$PATH"
-PATH="vendor/bin:$PATH"
-export PATH
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
+# pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -25,11 +24,6 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # needed for .XCompose to be read
 export GTK_IM_MODULE=xim
-
-# linuxbrew
-# export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-# export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"
-# export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"
 
 # $PAGER needed for some programs
 export PAGER="less"
@@ -42,6 +36,18 @@ export FILE_MANAGER="ranger"
 export GUI_FILE_MANAGER="$TERM_EXEC -e $FILE_MANAGER"
 
 # export QT_QPA_PLATFORMTHEME="qt5ct"
+
+# nodejs
+PATH="$HOME/node_modules/.bin:$PATH"
+# ruby
+PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
+# chef
+PATH="$(find ~/.chefdk/gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
+# custom
+PATH="$HOME/git/linux-utils:$PATH"
+PATH="vendor/bin:$PATH"
+export PATH
+
 
 ##############################################
 # COLORS
