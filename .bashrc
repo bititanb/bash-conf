@@ -210,5 +210,4 @@ esac
 export GPG_TTY='tty'
 
 # for phpbrew
-source "$HOME/.phpbrew/bashrc"
-
+#source "$HOME/.phpbrew/bashrc"

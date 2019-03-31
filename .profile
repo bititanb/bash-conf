@@ -3,9 +3,11 @@
 #umask 022
 
 # base PATH
-PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
+#PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
+PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 # golang
 PATH="$HOME/go/bin:$PATH"
+GOPATH="$HOME/go"
 # nodejs
 PATH="$HOME/node_modules/.bin:$PATH"
 # ruby
