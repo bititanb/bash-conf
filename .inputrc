@@ -4,14 +4,12 @@ $include /etc/inputrc
 set bell-style visible
 # completions in color
 set colored-stats on
-# always show ... instead of similar part in completion
-# set completion-prefix-display-length 1
 # menu completion display similar part before cycling
 set menu-complete-display-prefix on
 # no need for extra tabs on completion
 set show-all-if-ambiguous on
 # no need for extra tabs on completion
 set show-all-if-unmodified on
-
-#Control-i: menu-complete
-#Control-j: menu-complete-backward
+# arrow up/down search typed symbols from the beginning of strings
+"\e[A":history-search-backward
+"\e[B":history-search-forward

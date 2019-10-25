@@ -3,9 +3,10 @@
 #umask 022
 
 # base PATH
-export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
+export PATH="$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/games:/usr/games"
 
 # golang
+export GOPATH="$HOME/.go"
 export PATH="$GOPATH/bin:$PATH"
 
 # pyenv
@@ -14,7 +15,6 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
->>>>>>> origin/master
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
@@ -35,19 +35,27 @@ export WEB_BROWSER="firefox"
 export FILE_MANAGER="ranger"
 export GUI_FILE_MANAGER="$TERM_EXEC -e $FILE_MANAGER"
 
-# export QT_QPA_PLATFORMTHEME="qt5ct"
-
 # nodejs
 PATH="$HOME/node_modules/.bin:$PATH"
+
 # ruby
-PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
+PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d 2>/dev/null | tac | xargs printf '%s:')$PATH"
+
 # chef
-PATH="$(find ~/.chefdk/gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d | tac | xargs printf '%s:')$PATH"
+PATH="$(find ~/.chefdk/gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d 2>/dev/null | tac | xargs printf '%s:')$PATH"
+
+# rust
+PATH="$HOME/.cargo/bin:$PATH"
+
 # custom
 PATH="$HOME/git/linux-utils:$PATH"
 PATH="vendor/bin:$PATH"
 export PATH
 
+# nix
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi
+
+export ANSIBLE_VAULT_PASSWORD_FILE="$HOME/.vault_pass"
 
 ##############################################
 # COLORS
@@ -96,3 +104,6 @@ if [ -n "$BASH_VERSION" ]; then
 	. "$HOME/.bashrc"
     fi
 fi
+# Ubuntu make installation of Ubuntu Make binary symlink
+PATH=/home/user1/.local/share/umake/bin:$PATH
+
