@@ -1,6 +1,5 @@
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
+# Secure umask
+umask 027
 
 ################################################################################
 # CUSTOM VARIABLES
@@ -24,6 +23,7 @@ export RIPGREP_CONFIG_PATH="$HOME/.ripgreprc"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
+export NPM_CONFIG_PREFIX="$HOME/.node_modules"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 # needed for .XCompose to be read
@@ -66,7 +66,7 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 
 # nodejs
-export PATH="$HOME/node_modules/.bin:$PATH"
+export PATH="$HOME/.node_modules/.bin:$PATH"
 
 # ruby
 export PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d 2>/dev/null | xargs printf '%s:')$PATH"
@@ -75,7 +75,7 @@ export PATH="$(find ~/.gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d 2>/de
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # chef
-export PATH="$(find ~/.chefdk/gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d 2>/dev/null | tac | xargs printf '%s:')$PATH"
+#export PATH="$(find ~/.chefdk/gem/ruby/ -maxdepth 2 -mindepth 2 -name bin -type d 2>/dev/null | tac | xargs printf '%s:')$PATH"
 
 ##############################################
 # COLORS

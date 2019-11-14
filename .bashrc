@@ -7,6 +7,13 @@
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
+alias git='hub'
+
+# Decode strings: `strace -f echo asdf | format-strace`
+alias format-strace='grep --line-buffered -o '\''".\+[^"]"'\'' | grep --line-buffered -o '\''[^"]*[^"]'\'' | while read -r line; do printf "%b" $line; done | tr "\r\n" "\275\276" | tr -d "[:cntrl:]" | tr "\275\276" "\r\n"'
+alias pip2upgrade='pip2 freeze --user | cut -d'=' -f1 | xargs pip2 install --user -U'
+alias pip3upgrade='pip3 freeze --user | cut -d'=' -f1 | xargs pip3 install --user -U'
+
 ################################################################################
 # FUNCTIONS (non-interactive usage)
 ################################################################################
@@ -92,12 +99,15 @@ FIRST_PROMPT=1
 PROMPT_COMMAND="__postCommand"
 
 # History settings
-HISTSIZE=50000
 HISTFILESIZE=50000
 HISTCONTROL=ignorespace:ignoredups:erasedups #lines starting with space in the history.
 HISTIGNORE='reset:cd ~:cd -:git status:top:ps aux:%:%1:%2:%3:&:ls:pwd:exit:clear:bash:sh:dash:fg:bg:sync:ls -ltr:ls -l'
+
+# Disabled this, since we are already appending history at each prompt.
+#HISTSIZE=5000
 # append to the history file, don't overwrite it
-shopt -s histappend
+#shopt -s histappend
+unset HISTSIZE
 
 # second "exit" needed if running any jobs
 shopt -s checkjobs
@@ -194,3 +204,7 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# heroku
+#HEROKU_AC_BASH_SETUP_PATH=/home/user1/.cache/heroku/autocomplete/bash_setup\
+#  && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH
