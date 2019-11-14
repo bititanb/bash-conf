@@ -1,4 +1,5 @@
-#
+#!/bin/zsh
+
 # Sets Prezto options.
 #
 # Authors:

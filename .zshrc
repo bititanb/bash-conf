@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -40,4 +42,9 @@ typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
 
 # Disable autojump to menu on tab
-setopt +o automenu
+unsetopt automenu
+unsetopt autocd
+unsetopt autopushd
+
+# Overwrite/disable function that invokes ls on cd in Garrett prompt
+function prompt_garrett_chpwd {}

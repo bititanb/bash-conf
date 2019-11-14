@@ -187,6 +187,13 @@ case "$TERM" in
     ;;
 esac
 
+# Source highlighting for `less`. Moved it from .profile here for now, since
+# now we are using zsh and .zprofile already has something like that.
+# TODO: Should this be in .bash_profile or whatever?
+if [ -x /usr/bin/src-hilite-lesspipe.sh ]; then
+    export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
+fi
+
 # highlighting for `ls` (has to be in .bashrc, in .profile it doesn't work for some reason)
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors.ansi-universal && eval "$(dircolors -b ~/.dircolors.ansi-universal)" || eval "$(dircolors -b)"
