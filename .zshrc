@@ -36,6 +36,9 @@ nt() {
 
 # Bigger history file
 SAVEHIST=50000
+HISTORY_IGNORE='(reset|cd ~|cd -|git status|top|ps aux|%|%1|%2|%3|&|pwd|exit|clear|bash|sh|dash|zsh|fg|bg|sync|ls|ls -ltr|ls -l)'
+# add / to wordchars so that ^W deletes whole word up to next space, just like bash
+WORDCHARS='/*?_-.[]~&;!#$%^(){}<>'
 
 typeset -A ZSH_HIGHLIGHT_STYLES
 # Change path highlightning

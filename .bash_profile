@@ -27,6 +27,11 @@ export LESS_TERMCAP_me=$(printf "$R") # turn off bold, blink, underline
 export LESS_TERMCAP_ue=$(printf "$R") # stop underline
 export GREP_COLORS='ms=7:mc=7:sl=:cx=:fn=31:ln=31:bn=31:se=31'
 
+# Source highlighting for `less`.
+if [ -x /usr/bin/src-hilite-lesspipe.sh ]; then
+    export LESSOPEN="| /usr/bin/src-hilite-lesspipe.sh %s"
+fi
+
 if [ -f "$HOME/.bashrc" ]; then
   . "$HOME/.bashrc"
 fi
