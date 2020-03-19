@@ -208,3 +208,4 @@ fi
 # heroku
 #HEROKU_AC_BASH_SETUP_PATH=/home/user1/.cache/heroku/autocomplete/bash_setup\
 #  && test -f $HEROKU_AC_BASH_SETUP_PATH && source $HEROKU_AC_BASH_SETUP_PATH
+complete -C /usr/local/bin/kustomize kustomize
